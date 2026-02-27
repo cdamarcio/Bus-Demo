@@ -1,15 +1,33 @@
-export const syncUpstream = async (data: any) => {
-    try {
-      // Tenta enviar logs para a API da SEMEC [cite: 58]
-      const response = await fetch('https://api.semec.ca.pa.gov.br/viagens/sincronizar', {
-        method: 'POST',
-        body: JSON.stringify(data),
-        headers: { 'Content-Type': 'application/json' }
-      });
-      return response.ok;
-    } catch (error) {
-      // Adiciona à fila se houver "Sombra Digital" [cite: 61, 62]
-      console.log("Offline: Dados salvos na fila local.");
-      return false;
+import { Aluno } from '../types';
+
+const STORAGE_KEY = '@TransPorte:fila_sincronizacao';
+
+export const SyncService = {
+  // Salva o embarque no "estoque" local do tablet
+  salvarLocalmente: (aluno: Aluno) => {
+    const fila = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+    fila.push({ ...aluno, dataSincronismo: new Date().toISOString() });
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(fila));
+    console.log(`📥 Embarque de ${aluno.nome} salvo para sincronização posterior.`);
+  },
+
+  // Tenta enviar os dados para o servidor da SEMEC
+  sincronizar: async () => {
+    const fila = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+    
+    if (fila.length === 0) return;
+
+    if (navigator.onLine) {
+      try {
+        console.log("📡 Wi-Fi detectado! Sincronizando dados com a SEMEC...");
+        // Aqui entrará a sua chamada de API (Fetch/Axios) para o MazzSys ou MazzCursos
+        // await api.post('/sincronizar', fila);
+        
+        localStorage.removeItem(STORAGE_KEY); // Limpa a fila após sucesso
+        alert(`${fila.length} registros sincronizados com sucesso!`);
+      } catch (error) {
+        console.error("❌ Falha ao subir dados. Tentando novamente na próxima escola.");
+      }
     }
-  };
+  }
+};

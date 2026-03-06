@@ -1,34 +1,50 @@
-import '../models/aluno_model.dart';
+import 'dart:convert';
 
-class ApiService {
-  // Simula o endpoint GET/api/rotas/{id_veiculo}/alunos [cite: 57]
-  Future<List<AlunoModel>> fetchAlunosFromSEMEC() async {
-    // Simulando atraso de rede
-    await Future.delayed(const Duration(seconds: 2));
+class AlunoModel {
+  final String nome;
+  final String matricula;
+  final String fotoHash;
+  final String escola;
+  final String pontoParada;
+  bool embarcado;
+  DateTime? dataHoraEmbarque;
+  double? latitude;
+  double? longitude;
 
-    // Dados Mockados seguindo o requisito de Downstream [cite: 14]
-    return [
-      AlunoModel(
-        nome: "Felipe Rodrigues",
-        matricula: "2024005",
-        fotoHash: "v_fac_005_xyz", // Vetor facial para reconhecimento 
-        escola: "Escola Municipal Deuzuita",
-        pontoParada: "Setor Aeroporto",
-      ),
-      AlunoModel(
-        nome: "Ana Clara Souza",
-        matricula: "2024001",
-        fotoHash: "v_fac_001_abc",
-        escola: "Escola Municipal Deuzuita",
-        pontoParada: "Setor Central",
-      ),
-    ];
+  AlunoModel({
+    required this.nome,
+    required this.matricula,
+    required this.fotoHash,
+    required this.escola,
+    required this.pontoParada,
+    this.embarcado = false,
+    this.dataHoraEmbarque,
+    this.latitude,
+    this.longitude,
+  });
+
+  factory AlunoModel.fromJson(Map<String, dynamic> json) {
+    return AlunoModel(
+      nome: json['nome'] ?? '',
+      matricula: json['matricula'] ?? '',
+      fotoHash: json['foto_hash'] ?? '',
+      escola: json['escola'] ?? '',
+      pontoParada: json['ponto_parada'] ?? '',
+      embarcado: json['embarcado'] == 1,
+    );
   }
 
-  // Simula o endpoint POST/api/viagens/sincronizar [cite: 58]
-  Future<bool> syncUpstream(List<Map<String, dynamic>> logs) async {
-    await Future.delayed(const Duration(seconds: 2));
-    // Simula o envio bem sucedido para o Banco Central PostgreSQL [cite: 59]
-    return true;
+  Map<String, dynamic> toMap() {
+    return {
+      'nome': nome,
+      'matricula': matricula,
+      'foto_hash': fotoHash,
+      'escola': escola,
+      'ponto_parada': pontoParada,
+      'embarcado': embarcado ? 1 : 0,
+      'data_hora_embarque': dataHoraEmbarque?.toIso8601String(),
+      'latitude': latitude,
+      'longitude': longitude,
+    };
   }
 }

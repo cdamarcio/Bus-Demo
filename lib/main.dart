@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-// Novos caminhos após a organização das pastas 
-import 'screens/login_screen.dart';
-import 'screens/dashboard_screen.dart';
-import 'screens/facial_recognition_screen.dart';
-import 'screens/manual_check_screen.dart';
-import 'screens/summary_screen.dart'; 
+import 'package:bus/screens/login_screen.dart';
+import 'package:bus/screens/dashboard_screen.dart';
+import 'package:bus/screens/facial_recognition_screen.dart';
+import 'package:bus/screens/manual_check_screen.dart';
+import 'package:bus/screens/summary_screen.dart';
 
 void main() {
   runApp(const FrotaEscolarApp());
@@ -19,14 +18,15 @@ class FrotaEscolarApp extends StatelessWidget {
       title: 'Monitoramento Frota CDA',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primaryColor: const Color(0xFF008000), // Verde [cite: 41]
+        primaryColor: const Color(0xFF008000),
         useMaterial3: true,
       ),
       initialRoute: '/',
       routes: {
         '/': (context) => const LoginScreen(),
         '/dashboard': (context) => const DashboardScreen(),
-        '/facial_recognition': (context) => const FacialRecognitionScreen(),
+        // REMOVIDO O 'const' AQUI PARA EVITAR O ERRO DE COMPILAÇÃO
+        '/facial_recognition': (context) => FacialRecognitionScreen(),
         '/manual_check': (context) => const ManualChecklistScreen(),
         '/summary': (context) => const SummaryScreen(),
       },

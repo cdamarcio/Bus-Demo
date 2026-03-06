@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
-import 'dart:async'; // Necessário para o Timer de simulação
-// Importações padronizadas
+import 'dart:async';
+// Importações padronizadas seguindo a arquitetura 'bus'
 import 'package:bus/database/database_helper.dart';
 import 'package:bus/services/location_service.dart';
 
@@ -18,7 +18,7 @@ class _FacialRecognitionScreenState extends State<FacialRecognitionScreen> {
   bool _isLoading = false;
   Timer? _simulationTimer;
   
-  // Aluno mockado para a demonstração
+  // Aluno mockado para a demonstração conforme Requisitos
   final String _mockMatricula = "2024005";
   final String _mockStudentName = "Felipe Rodrigues";
   final String _mockStudentSchool = "Escola Municipal Deuzuita";
@@ -39,7 +39,8 @@ class _FacialRecognitionScreenState extends State<FacialRecognitionScreen> {
       if (!mounted) return;
       setState(() {});
 
-      // INÍCIO DA SIMULAÇÃO: Após 4 segundos com a câmera aberta, o sistema "reconhece" o aluno
+      // [DEMO WEB]: Simula o tempo de processamento da IA
+      // Após 4 segundos com a câmera aberta, o sistema identifica o aluno automaticamente
       _simulationTimer = Timer(const Duration(seconds: 4), () {
         if (mounted && !_isStudentDetected) {
           setState(() => _isStudentDetected = true);
@@ -52,18 +53,19 @@ class _FacialRecognitionScreenState extends State<FacialRecognitionScreen> {
 
   @override
   void dispose() {
-    _simulationTimer?.cancel(); // Cancela o timer ao sair da tela
+    _simulationTimer?.cancel(); 
     _controller?.dispose();
     super.dispose();
   }
 
-  // [RF-004] Registro de Embarque com Geotagging
+  // [RF-004] Registro de Embarque com Geotagging (GPS)
   Future<void> _confirmarEmbarque() async {
     setState(() => _isLoading = true);
     try {
-      // Captura a localização (No navegador, pedirá permissão de GPS)
+      // Captura a localização via GPS para auditoria FNDE
       final position = await LocationService().getCurrentLocation();
 
+      // Grava no banco SQLite local (Offline First)
       await DatabaseHelper().registrarEmbarque(
         _mockMatricula, 
         position?.latitude ?? 0.0, 
@@ -71,53 +73,72 @@ class _FacialRecognitionScreenState extends State<FacialRecognitionScreen> {
       );
 
       if (!mounted) return;
-      Navigator.pop(context); // Volta ao Dashboard
+      Navigator.pop(context); // Retorna ao Dashboard
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Embarque de Felipe registrado com GPS!"), backgroundColor: Colors.green),
+        SnackBar(
+          content: Text("Embarque de $_mockStudentName confirmado!"), 
+          backgroundColor: Colors.green
+        ),
       );
     } catch (e) {
       setState(() => _isLoading = false);
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Erro ao registrar GPS"), backgroundColor: Colors.red),
+      );
     }
   }
 
   @override
   Widget build(BuildContext context) {
     if (_controller == null || !_controller!.value.isInitialized) {
-      return const Scaffold(backgroundColor: Colors.black, body: Center(child: CircularProgressIndicator()));
+      return const Scaffold(
+        backgroundColor: Colors.black, 
+        body: Center(child: CircularProgressIndicator(color: Colors.white))
+      );
     }
 
     return Scaffold(
       appBar: AppBar(
         title: const Text("Validação Facial - SEMEC"),
-        backgroundColor: const Color(0xFF008000),
+        backgroundColor: const Color(0xFF008000), // Verde
       ),
       body: Stack(
         children: [
-          // Visualização da Câmera
+          // Stream da Câmera em tempo real
           SizedBox.expand(child: CameraPreview(_controller!)),
 
-          // Moldura de escaneamento
+          // [RNF-002] Moldura Visual para o Monitor
           Center(
             child: Container(
               width: 260,
               height: 340,
               decoration: BoxDecoration(
-                border: Border.all(color: _isStudentDetected ? Colors.green : Colors.white, width: 4),
+                border: Border.all(
+                  color: _isStudentDetected ? Colors.green : Colors.white, 
+                  width: 4
+                ),
                 borderRadius: BorderRadius.circular(30),
               ),
               child: !_isStudentDetected 
                 ? const Align(
                     alignment: Alignment.bottomCenter,
                     child: Padding(
-                      padding: EdgeInsets.bottom(20),
-                      child: Text("Posicione o rosto", style: TextStyle(color: Colors.white, backgroundColor: Colors.black54)),
+                      padding: EdgeInsets.only(bottom: 20), // CORREÇÃO DE SINTAXE AQUI
+                      child: Text(
+                        "Escaneando Rosto...", 
+                        style: TextStyle(
+                          color: Colors.white, 
+                          backgroundColor: Colors.black54,
+                          fontWeight: FontWeight.bold
+                        )
+                      ),
                     ),
                   )
                 : null,
             ),
           ),
 
-          // Modal de Confirmação (Aparece após 4 segundos ou detecção)
+          // Modal de Confirmação do Aluno
           if (_isStudentDetected) _buildConfirmationOverlay(),
         ],
       ),
@@ -131,31 +152,47 @@ class _FacialRecognitionScreenState extends State<FacialRecognitionScreen> {
         child: Container(
           margin: const EdgeInsets.symmetric(horizontal: 30),
           padding: const EdgeInsets.all(25),
-          decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(20)),
+          decoration: BoxDecoration(
+            color: Colors.white, 
+            borderRadius: BorderRadius.circular(20)
+          ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const Icon(Icons.check_circle, color: Colors.green, size: 60),
+              const Icon(Icons.face_retouching_natural, color: Colors.green, size: 60),
               const SizedBox(height: 15),
-              const Text("ALUNO RECONHECIDO", style: TextStyle(fontSize: 14, color: Colors.grey)),
-              Text(_mockStudentName, style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
+              const Text("ALUNO IDENTIFICADO", style: TextStyle(fontSize: 14, color: Colors.grey)),
+              Text(
+                _mockStudentName, 
+                style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold)
+              ),
               Text(_mockStudentSchool, style: const TextStyle(fontSize: 14)),
               const SizedBox(height: 25),
               if (_isLoading)
                 const CircularProgressIndicator()
               else
-                SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(backgroundColor: Colors.green, padding: const EdgeInsets.all(15)),
-                    onPressed: _confirmarEmbarque,
-                    child: const Text("CONFIRMAR EMBARQUE", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
-                  ),
+                Column(
+                  children: [
+                    SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.green, 
+                          padding: const EdgeInsets.all(15)
+                        ),
+                        onPressed: _confirmarEmbarque,
+                        child: const Text(
+                          "CONFIRMAR EMBARQUE", 
+                          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)
+                        ),
+                      ),
+                    ),
+                    TextButton(
+                      onPressed: () => setState(() => _isStudentDetected = false),
+                      child: const Text("CANCELAR"),
+                    )
+                  ],
                 ),
-              TextButton(
-                onPressed: () => setState(() => _isStudentDetected = false),
-                child: const Text("TENTAR NOVAMENTE"),
-              )
             ],
           ),
         ),

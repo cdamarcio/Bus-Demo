@@ -1,5 +1,6 @@
-name: frota_escolar_cda
-description: Sistema de Monitoramento da Frota Escolar - Prefeitura de Conceição do Araguaia.
+name: bus
+description: Sistema de Monitoramento da Frota Escolar - SEMEC Conceição do Araguaia.
+# Versão do projeto conforme documento técnico [cite: 1, 4]
 version: 1.1.0+1
 
 environment:
@@ -9,23 +10,23 @@ dependencies:
   flutter:
     sdk: flutter
   
-  # Navegação e Ícones
+  # Ícones padrão para a interface [cite: 43]
   cupertino_icons: ^1.0.6
   
-  # [RF-002] Reconhecimento Facial e Câmera
+  # [RF-002] Câmera para Reconhecimento Facial Offline [cite: 20, 23]
   camera: ^0.11.0
   path_provider: ^2.1.1
   path: ^1.8.3
   
-  # [RF-001/RNF-003] Persistência Offline e Segurança
+  # [RF-001/RNF-003] Banco de Dados Local SQLite e Criptografia [cite: 18, 47]
   sqflite: ^2.3.0
-  sqlcipher_flutter_libs: ^0.6.0 # Para criptografia do SQLite [RNF-003]
+  sqlcipher_flutter_libs: ^0.6.0
   
-  # [RF-004] Geolocalização e Trajeto
+  # [RF-004] Geolocalização para auditoria de rotas (GPS) [cite: 27, 28]
   geolocator: ^10.1.0
   
-  # Interface e UX
-  google_fonts: ^6.1.0
+  # [RNF-003] Autenticação via JWT [cite: 48]
+  http: ^1.1.0
 
 dev_dependencies:
   flutter_test:
@@ -34,3 +35,4 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  # Configuração para aceitar ativos de imagem se necessário futuramente

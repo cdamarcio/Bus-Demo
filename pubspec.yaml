@@ -1,0 +1,21 @@
+name: bus
+description: "Sistema de Monitoramento Frota Escolar CDA"
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  sqflite: ^2.3.0
+  sqflite_common_ffi: ^2.3.0
+  sqflite_common_ffi_web: ^0.4.0
+  path: ^1.9.1
+  camera: ^0.11.0
+  geolocator: ^10.1.0
+  http: ^1.1.0
+
+flutter:
+  uses-material-design: true

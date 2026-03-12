@@ -1,149 +1,215 @@
-# BusEscolar – Sistema de Monitoramento da Frota Escolar (v1.1)
+# BusEscolar
+### Sistema Inteligente de Monitoramento do Transporte Escolar
 
-O **BusEscolar** é uma solução de mobilidade desenvolvida para a **Prefeitura de Conceição do Araguaia (SEMEC)**.
+![version](https://img.shields.io/badge/version-v1.1-blue)
+![status](https://img.shields.io/badge/status-em%20desenvolvimento-yellow)
+![platform](https://img.shields.io/badge/platform-React%20Native-blue)
+![database](https://img.shields.io/badge/database-SQLite-orange)
+![security](https://img.shields.io/badge/security-AES--256-green)
 
-O sistema automatiza o controle de embarque e rastreamento do transporte escolar, operando prioritariamente em **modo Offline First**, ideal para regiões com baixa conectividade.
+---
+
+# Visão Geral
+
+O **BusEscolar** é um sistema de monitoramento e auditoria do transporte escolar desenvolvido para a **Prefeitura de Conceição do Araguaia (SEMEC)**.
+
+A solução foi projetada para operar em **modo Offline First**, garantindo funcionamento em regiões rurais com baixa conectividade.
+
+O sistema realiza:
+
+- identificação biométrica de alunos
+- rastreamento de rotas escolares
+- auditoria de embarque
+- geração de relatórios de viagem
+- sincronização automática de dados
 
 ---
 
 # Principais Funcionalidades
 
-### Identificação Facial Offline (RF-002)
-Reconhecimento biométrico local via **Edge Computing** utilizando **Google ML Kit / TensorFlow Lite**, com tempo de resposta inferior a **3 segundos**.
+## Identificação Facial Offline
+Reconhecimento biométrico local utilizando **Edge Computing** com:
 
-### Monitoramento de Trajeto (RF-004)
-Captura de coordenadas **GPS a cada X segundos** para auditoria de rotas e conformidade com **FNDE/INEP**.
+- Google ML Kit
+- TensorFlow Lite
 
-### Sincronização Inteligente (RF-001)
-Fila de processamento para lidar com **"Sombra Digital"** das zonas rurais, enviando dados automaticamente quando Wi-Fi ou rede móvel estiver disponível.
+Tempo médio de validação:
 
-### Relatórios de Auditoria (RF-006)
-Geração de relatórios diretamente no dispositivo contendo:
+---
+
+## Monitoramento de Rotas
+
+Registro automático de localização GPS durante o trajeto:
+
+- coleta periódica de coordenadas
+- auditoria de rotas
+- conformidade com FNDE / INEP
+
+---
+
+## Sincronização Inteligente
+
+Fila de sincronização para ambientes com conectividade limitada:
+
+- armazenamento local
+- envio automático ao detectar rede
+- tolerância à falhas
+
+---
+
+## Relatórios de Auditoria
+
+Geração automática de relatórios contendo:
 
 - alunos presentes
 - alunos ausentes
 - quilometragem percorrida
+- histórico de viagens
 
-### Registro de Embarque Manual (RF-003)
-Sistema de fallback para casos de falha na biometria.
+Exportação em:
+
+---
+
+## Registro Manual de Embarque
+
+Sistema de fallback para casos de falha biométrica.
+
+---
+
+# Arquitetura do Sistema
 
 ---
 
 # Tecnologias Utilizadas
 
 ## Frontend Mobile
+
 - React Native
 - Expo
+- TypeScript
 
-## Reconhecimento Facial
+## Reconhecimento Biométrico
+
 - Google ML Kit
 - TensorFlow Lite
 
-## Banco de Dados Local
-- SQLite criptografado
-- SQLCipher
-- Criptografia **AES-256**
+## Banco Local
 
-## Backend (Integração)
+- SQLite
+- SQLCipher
+- AES-256
+
+## Backend
+
 - API REST
-- Integração com sistema **E-SEMEC**
-- Banco **PostgreSQL**
+- PostgreSQL
 
 ## Segurança
-- Autenticação via **JWT**
+
+- autenticação JWT
+- criptografia de dados sensíveis
 
 ---
 
 # Estrutura do Projeto
-BusEscolar/
-│
-├── src/
-│ ├── components/
-│ │ ├── FeedbackValidacao.tsx
-│ │ └── InterfaceConfirmacao.tsx
-│ │
-│ ├── database/
-│ │ ├── Connection.ts
-│ │ └── SQLite Criptografado
-│ │
-│ ├── pages/
-│ │ ├── Dashboard.tsx
-│ │ └── CameraValidacao.tsx
-│ │
-│ ├── services/
-│ │ ├── BiometricValidation.ts
-│ │ ├── FaceDetectorService.ts
-│ │ ├── LocationService.ts
-│ │ └── QueueService.ts
-│ │
-│ └── styles/
-│ └── themes.ts
-│
-└── README.md
+
+---
+
+# Interface do Sistema
+
+## Dashboard
+
+Controle de viagens e monitoramento.
+
+## Validação Biométrica
+
+Tela de reconhecimento facial do aluno.
+
+## Registro de Embarque
+
+Confirmação de embarque e presença.
 
 ---
 
 # Identidade Visual
 
-O sistema utiliza cores inspiradas no brasão de **Conceição do Araguaia**:
+O sistema utiliza cores baseadas no brasão municipal de **Conceição do Araguaia**:
 
 - Verde
 - Amarelo
 - Azul
 
-A interface foi projetada com:
+Interface otimizada para:
 
-- botões grandes
+- uso em tablets
+- operação em movimento
 - alto contraste
-- uso seguro dentro de veículos em movimento
 
 ---
 
 # Requisitos de Software
 
-Instale previamente:
+Antes de instalar o projeto, certifique-se de possuir:
 
-### Node.js
-Versão **LTS**
+Node.js (LTS)
 
-### Git
-Para baixar o código do repositório
+Git
 
-### VS Code
-Editor recomendado
+VS Code
 
-### Android Studio
-Necessário para emular tablets Android (Android 10+)
+Android Studio (Android 10+)
 
 ---
 
-# Instalação do Projeto
+# Instalação
 
 Clone o repositório:
-
-```bash
 git clone https://github.com/cdamarcio/Bus.git
 
+Entre na pasta:
 cd Bus
 
+
+Instale as dependências:
 npm install
 
+Execute o projeto:
 npx expo start
 
-Versão
 
-v1.1 — 27/02/2026
+---
 
-Versão completa do sistema BusEscolar com:
+# Roadmap do Projeto
 
-reconhecimento facial offline
+## v1.1
+- reconhecimento facial offline
+- rastreamento GPS
+- sincronização inteligente
+- relatórios de auditoria
 
-rastreamento de rotas
+## v1.2 (planejado)
 
-sincronização inteligente
+- integração com portal da SEMEC
+- painel web administrativo
+- dashboard de gestão de rotas
 
-auditoria de transporte escolar
+## v2.0 (planejado)
 
-Licença
+- inteligência artificial para otimização de rotas
+- análise preditiva de transporte escolar
 
-Projeto desenvolvido por: Márcio Rodrigues de Oliveira, Analista de Sistemas.
+---
+
+# Licença
+
+Projeto desenvolvido para fins institucionais e acadêmicos.
+
+---
+
+# Autor
+
+Márcio Rodrigues de Oliveira  
+Engenheiro de Software
+
+
+

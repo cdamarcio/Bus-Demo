@@ -1,43 +1,70 @@
 # Telas do Aplicativo
 
-## Dashboard
+Este documento apresenta as principais telas do sistema **BusEscolar**.
 
-+--------------------------+
-| BUS ESCOLAR              |
-|--------------------------|
-| Rota: Zona Rural 03      |
-| Presentes: 12            |
-| Ausentes: 3              |
-|--------------------------|
-| [ Iniciar Embarque ]     |
-| [ Relatório ]            |
-+--------------------------+
+---
 
-Validação Biométrica
+# Dashboard
 
-+--------------------------+
-| VALIDAÇÃO DO ALUNO |
-| |
-| [ CAMERA ] |
-| |
-| Nome: João da Silva |
-| Status: Confirmado |
-| |
-| [ Confirmar Embarque ] |
-+--------------------------+
+Tela inicial utilizada pelo monitor do transporte escolar.
 
-## Registro Manual
+Mostra:
 
-+--------------------------+
-| REGISTRO MANUAL          |
-|                          |
-| Nome do aluno:           |
-| [____________________]   |
-|                          |
-| Motivo:                  |
-| ( ) Falha biometria      |
-| ( ) Novo aluno           |
-|                          |
-| [ Registrar ]            |
-+--------------------------+
+- rota atual
+- quantidade de alunos presentes
+- alunos ausentes
+- acesso rápido ao embarque
 
+| BUS ESCOLAR                          |
+| ------------------------------------ |
+| Rota: Zona Rural 03                  |
+| Alunos presentes: 12                 |
+| Alunos ausentes: 3                   |
+| ----------------------------------   |
+| [ Iniciar Embarque ]                 |
+| [ Ver Relatório ]                    |
+| +----------------------------------+ |
+
+
+---
+
+# Validação Biométrica
+
+Tela responsável pelo reconhecimento facial do aluno.
+
+Fluxo:
+
+1. câmera captura o rosto
+2. sistema compara com banco local
+3. confirma identidade
+4. registra embarque
+
+
+---
+
+# Registro Manual
+
+Utilizado quando:
+
+- biometria falha
+- aluno novo
+- problema na câmera
+
+
+---
+
+# Relatório de Viagem
+
+Tela que apresenta o resumo da rota.
+
+
+---
+
+# Observações
+
+O sistema foi projetado para:
+
+- uso em tablets
+- operação em ambientes com pouca conectividade
+- botões grandes para uso dentro do ônibus
+- alto contraste para visibilidade

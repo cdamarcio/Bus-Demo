@@ -6,40 +6,40 @@ A seguir estão algumas telas do aplicativo.
 
 ## Tela 1 – Dashboard
 
-![Dashboard](imagens/tela1.png)
+![Dashboard](imagens/01.png)
 
 ---
 
 ## Tela 2 – Validação Facial
 
-![Validação Facial](imagens/tela2.png)
+![Validação Facial](imagens/02.png)
 
 ---
 
 ## Tela 3 – Confirmação de Embarque
 
-![Confirmação](imagens/tela3.png)
+![Confirmação](imagens/03.png)
 
 ---
 
 ## Tela 4 – Registro Manual
 
-![Registro Manual](imagens/tela4.png)
+![Registro Manual](imagens/04.png)
 
 ---
 
 ## Tela 5 – Rastreamento GPS
 
-![GPS](imagens/tela5.png)
+![GPS](imagens/05.png)
 
 ---
 
 ## Tela 6 – Relatório de Viagem
 
-![Relatório](imagens/tela6.png)
+![Relatório](imagens/06.png)
 
 ---
 
 ## Tela 7 – Histórico de Rotas
 
-![Histórico](imagens/tela7.png)
+![Histórico](imagens/07.png)

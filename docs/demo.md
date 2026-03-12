@@ -1,36 +1,45 @@
-# Demo do Sistema
+# Demonstração do Sistema BusEscolar
 
-A demonstração online pode ser publicada usando GitHub Pages.
-
-URL da demo:
-
-https://cdamarcio.github.io/Bus
+A seguir estão algumas telas do aplicativo.
 
 ---
 
-# Como publicar
+## Tela 1 – Dashboard
 
-No repositório:
-
-Settings → Pages
-
-Source:
-
-Deploy from branch
-
-Branch:
-
-main
-
-Pasta:
-
-/docs
+![Dashboard](imagens/tela1.png)
 
 ---
 
-# Funcionalidades da demo
+## Tela 2 – Validação Facial
 
-- dashboard do sistema
-- simulação de embarque
-- validação facial simulada
-- geração de relatório
+![Validação Facial](imagens/tela2.png)
+
+---
+
+## Tela 3 – Confirmação de Embarque
+
+![Confirmação](imagens/tela3.png)
+
+---
+
+## Tela 4 – Registro Manual
+
+![Registro Manual](imagens/tela4.png)
+
+---
+
+## Tela 5 – Rastreamento GPS
+
+![GPS](imagens/tela5.png)
+
+---
+
+## Tela 6 – Relatório de Viagem
+
+![Relatório](imagens/tela6.png)
+
+---
+
+## Tela 7 – Histórico de Rotas
+
+![Histórico](imagens/tela7.png)

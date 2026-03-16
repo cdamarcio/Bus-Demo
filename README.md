@@ -90,12 +90,12 @@ npx expo start
 
 v1.1 — 27/02/2026
 
-Primeira versão completa do sistema BusEscolar.
+Primeira versão apenas com o Frontend do sistema BusEscolar.
 
 ---
 
 # Autor
 
-**Márcio Rodrigues de Oliveira** (62) 99646-6033
+**Márcio Rodrigues de Oliveira** Engenheiro de Software
 
-Engenheiro de Software
+cda.marcio@gmail.com

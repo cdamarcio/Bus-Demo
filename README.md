@@ -15,13 +15,17 @@ O **BusEscolar** é um sistema de monitoramento e auditoria do transporte escola
 
 O sistema opera em **modo Offline First**, permitindo funcionamento em regiões rurais com baixa conectividade.
 
-Principais recursos:
+## Principais recursos:
 
-- identificação biométrica de alunos
-- rastreamento de rotas
-- controle de embarque
-- geração de relatórios
-- sincronização automática
+**Offline First**: Operação total em zonas rurais sem sinal de internet.
+
+**Reconhecimento Facial**: Validação de embarque via biometria facial processada localmente (Edge Computing).
+
+**Rastreamento GPS**: Monitoramento contínuo do trajeto para conformidade com FNDE/INEP.
+
+**Sincronização Inteligente**: Fila de upload automático ao detectar Wi-Fi ou sinal estável.
+
+**Segurança (LGPD)**: Banco de dados SQLite criptografado para proteção de dados de menores.
 
 ---
 
@@ -39,31 +43,15 @@ Arquivos de documentação:
 
 # Tecnologias Utilizadas
 
-Frontend
+**Frontend**: Flutter (Dart).
 
-- React Native
-- Expo
-- TypeScript
+**Banco de Dados**: SQLite com SQLCipher (AES-256).
 
-Reconhecimento Facial
+**Motor Biométrico**: Google ML Kit / TensorFlow Lite.
 
-- Google ML Kit
-- TensorFlow Lite
+**Backend**: Integração via API com o sistema E-SEMEC (PostgreSQL).
 
-Banco de Dados
-
-- SQLite
-- SQLCipher
-
-Backend
-
-- API REST
-- PostgreSQL
-
-Segurança
-
-- autenticação JWT
-- criptografia AES-256
+**Segurança**: Autenticação JWT e Criptografia AES-256.
 
 ---
 
@@ -76,17 +64,25 @@ Entre na pasta:
 
 cd Bus
 
-
 Instale dependências:
 
 npm install
-
 
 Execute:
 
 npx expo start
 
+---
 
+## Como Operar o Sistema
+
+1. **Início da Rota**: O monitor seleciona a rota designada no tablet.
+   
+3. **Embarque**: O aluno posiciona-se à frente da câmera. O sistema realiza o reconhecimento em < 3 segundos.
+
+4. **Fallback**: Caso a biometria falhe, o monitor pode realizar o registro manual.
+
+5. **Encerramento**: Ao chegar na escola, o sistema reconhece o perímetro (Geofencing) e inicia a sincronização dos logs.
 
 ---
 
@@ -100,6 +96,6 @@ Primeira versão completa do sistema BusEscolar.
 
 # Autor
 
-Márcio Rodrigues de Oliveira
+**Márcio Rodrigues de Oliveira** (62) 99646-6033
 
 Engenheiro de Software

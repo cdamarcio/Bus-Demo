@@ -1,33 +1,40 @@
 import 'package:geolocator/geolocator.dart';
+import 'package:sqflite/sqflite.dart';
 
 class LocationService {
-  /// Verifica permissões e captura a posição atual [RF-004]
-  Future<Position?> getCurrentLocation() async {
-    bool serviceEnabled;
-    LocationPermission permission;
+  final Database db;
+  bool isTracking = false;
 
-    // 1. Verifica se o serviço de GPS está ativo no tablet
-    serviceEnabled = await Geolocator.isLocationServiceEnabled();
-    if (!serviceEnabled) {
-      return Future.error('O GPS está desativado no dispositivo.');
-    }
+  LocationService(this.db);
 
-    // 2. Gerencia as permissões de localização [RNF-003]
-    permission = await Geolocator.checkPermission();
-    if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
-      if (permission == LocationPermission.denied) {
-        return Future.error('Permissão de localização negada.');
-      }
-    }
-    
-    if (permission == LocationPermission.deniedForever) {
-      return Future.error('Permissão de localização negada permanentemente.');
-    }
+  /// Inicia a captura de coordenadas para auditoria FNDE/INEP 
+  void iniciarRastreamento(int idRota) async {
+    isTracking = true;
 
-    // 3. Captura a coordenada com alta precisão para auditoria
-    return await Geolocator.getCurrentPosition(
-      desiredAccuracy: LocationAccuracy.high,
+    // Configurações de precisão e distância (ex: a cada 50 metros) 
+    const LocationSettings locationSettings = LocationSettings(
+      accuracy: LocationAccuracy.high,
+      distanceFilter: 50, 
     );
+
+    Geolocator.getPositionStream(locationSettings: locationSettings).listen(
+      (Position position) async {
+        if (!isTracking) return;
+
+        // Salva o "traçado" da rota no banco local (Offline First) [cite: 7, 28]
+        await db.insert('rastreio_gps', {
+          'latitude': position.latitude,
+          'longitude': position.longitude,
+          'velocidade': position.speed,
+          'timestamp_posicao': DateTime.now().toIso8601String(),
+        });
+
+        print("Posição gravada: ${position.latitude}, ${position.longitude}");
+      },
+    );
+  }
+
+  void pararRastreamento() {
+    isTracking = false;
   }
 }

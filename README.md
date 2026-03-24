@@ -101,6 +101,4 @@ Primeira versão apenas com o Frontend do sistema BusEscolar.
 ---
 # Autor
 
-**Márcio Rodrigues de Oliveira** | Desenvolvedor Líder
-
-cda.marcio@gmail.com
+**Márcio Rodrigues de Oliveira | Desenvolvedor Líder Fullstack | cda.marcio@gmail.com**

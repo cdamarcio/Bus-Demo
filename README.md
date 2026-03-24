@@ -96,8 +96,6 @@ Primeira versão apenas com o Frontend do sistema BusEscolar.
 
 # Autor
 
-**Márcio Rodrigues de Oliveira** 
-
-Engenheiro de Software
+**Márcio Rodrigues de Oliveira** Engenheiro de Software
 
 cda.marcio@gmail.com

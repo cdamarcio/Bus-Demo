@@ -99,6 +99,6 @@ Primeira versão apenas com o Frontend do sistema BusEscolar.
 **Copyright © 2026** Secretaria Municipal de Educação de Conceição do Araguaia - PA.
 
 ---
-# Autor
+## Autor
 
 **Márcio Rodrigues de Oliveira | Desenvolvedor Líder Fullstack | cda.marcio@gmail.com**
